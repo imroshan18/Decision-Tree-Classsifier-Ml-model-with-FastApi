@@ -1,64 +1,260 @@
-# Student Pass/Fail Prediction System
 
-This project is a comprehensive machine learning application designed to predict student academic outcomes. It utilizes a Decision Tree Classifier for prediction logic, a FastAPI backend for model serving, and a Gradio frontend for user interaction.
 
-## Overview
+# AcademicInsight ML
 
-The system analyzes three primary factors to determine a student's status:
-- Study Hours: Total hours spent studying per day.
-- Attendance: Percentage of classes attended.
-- Previous Score: The score achieved in the most recent examination.
+### Student Performance Classification System with FastAPI & Gradio
 
-The model provides a Pass or Fail prediction along with a confidence score and a breakdown of feature importance, showing which factors most influenced the result.
+AcademicInsight ML is an end-to-end machine learning application designed to predict student academic outcomes using a Decision Tree classification model.
 
-## Project Structure
+The project demonstrates full lifecycle ML development including:
 
-- `data_generation.py`: Generates a synthetic dataset with realistic student performance patterns.
-- `train_model.py`: Trains the Decision Tree model, performs evaluations, and generates a visualization of the decision logic.
-- `app.py`: A FastAPI web server that exposes a RESTful endpoint for predictions.
-- `ui.py`: A Gradio-based web interface for interactive user input and result visualization.
-- `run.py`: An orchestration script to initialize training and launch all services simultaneously.
-- `requirements.txt`: Documentation of necessary Python dependencies.
-- `utils.py`: Helper functions for model persistence and file handling.
+* Synthetic data generation
+* Model training and evaluation
+* Model serialization
+* API deployment with FastAPI
+* Interactive frontend with Gradio
 
-## Installation and Setup
+This repository showcases how a trained machine learning model can be deployed as a production-style prediction service.
 
-### Prerequisites
-- Python 3.8 or higher
-- pip (Python package installer)
+---
 
-### Step 1: Install Dependencies
-Install the required libraries using the following command:
-```bash
+## Author
+
+**imroshan18**
+
+---
+
+## Project Objective
+
+The goal of AcademicInsight ML is to determine whether a student is likely to pass or fail based on measurable academic indicators.
+
+The system evaluates three primary features:
+
+* Study Hours (daily average)
+* Attendance Percentage
+* Previous Examination Score
+
+The model outputs:
+
+* Predicted Outcome (Pass / Fail)
+* Confidence Score
+* Feature Importance Breakdown
+
+This provides both prediction and interpretability.
+
+---
+
+## System Architecture
+
+The application follows a modular ML deployment structure.
+
+### 1. Data Generation Layer
+
+`data_generation.py` creates a synthetic dataset simulating realistic academic performance distributions. This ensures:
+
+* Balanced class representation
+* Meaningful feature relationships
+* Controlled experimentation
+
+---
+
+### 2. Model Training Layer
+
+`train_model.py`:
+
+* Trains a Decision Tree Classifier
+* Evaluates model performance
+* Saves trained model (`model.pkl`)
+* Saves metadata (`metadata.pkl`)
+* Generates a visual tree representation (`tree_plot.png`)
+
+---
+
+### 3. Backend API (FastAPI)
+
+`app.py` exposes a RESTful prediction endpoint.
+
+Responsibilities:
+
+* Load serialized model
+* Accept feature inputs via JSON
+* Return prediction results
+* Provide health check endpoint
+* Generate Swagger documentation
+
+---
+
+### 4. Frontend Interface (Gradio)
+
+`ui.py` provides:
+
+* Interactive sliders for input parameters
+* Real-time prediction results
+* Visual model explanation
+* Feature importance display
+
+---
+
+### 5. Orchestration Layer
+
+`run.py` coordinates:
+
+* Dataset generation
+* Model training
+* Backend startup
+* Frontend launch
+
+This simulates a full ML deployment workflow.
+
+---
+
+## Technology Stack
+
+| Component           | Technology    |
+| ------------------- | ------------- |
+| Machine Learning    | Scikit-learn  |
+| Backend API         | FastAPI       |
+| Frontend            | Gradio        |
+| Data Handling       | Pandas, NumPy |
+| Model Serialization | Pickle        |
+| Language            | Python 3.8+   |
+
+---
+
+## Installation Guide
+
+### 1. Install Dependencies
+
+```bash id="ak29dp"
 pip install -r requirements.txt
 ```
 
-### Step 2: Initialize and Run the Application
-The entire system can be launched using the provided unified runner:
-```bash
+---
+
+### 2. Launch the Full System
+
+```bash id="r4pm82"
 python run.py
 ```
 
-This command will:
-1. Generate the training data.
-2. Train the Decision Tree model.
-3. Save the model and its metadata for serving.
-4. Generate a visualization of the decision logic.
-5. Launch the FastAPI backend on port 8000.
-6. Launch the Gradio frontend on port 7860.
+This will:
 
-## Usage
+* Generate synthetic data
+* Train the model
+* Save artifacts
+* Start FastAPI backend (port 8000)
+* Start Gradio frontend (port 7860)
 
-Once the application is running, follow these steps to use the system:
+---
 
-1. Open your web browser and navigate to `http://127.0.0.1:7860`.
-2. Adjust the sliders to represent a student's study habits and previous scores.
-3. Click the "Predict" button to receive a prediction.
-4. Review the "How it Works" section to see the visual representation of the model's decision path.
-5. Review the feature importance breakdown to understand the weight assigned to each input variable.
+## Using the Application
 
-## API Documentation
+1. Open your browser:
 
-The backend service also provides automated API documentation. While the system is running, you can access:
-- Swagger UI: `http://127.0.0.1:8000/docs`
-- Health Check: `http://127.0.0.1:8000/health`
+```
+http://127.0.0.1:7860
+```
+
+2. Adjust:
+
+   * Study Hours
+   * Attendance Percentage
+   * Previous Score
+
+3. Click “Predict”.
+
+4. View:
+
+   * Pass/Fail result
+   * Confidence level
+   * Feature importance breakdown
+   * Decision tree visualization
+
+---
+
+## API Access
+
+While the system is running:
+
+### Swagger Documentation
+
+```
+http://127.0.0.1:8000/docs
+```
+
+### Health Endpoint
+
+```
+http://127.0.0.1:8000/health
+```
+
+### Prediction Endpoint
+
+```
+POST /predict
+```
+
+Example request body:
+
+```json
+{
+  "study_hours": 5,
+  "attendance": 85,
+  "previous_score": 70
+}
+```
+
+---
+
+## Project Structure
+
+```
+AcademicInsight-ML/
+│
+├── app.py               # FastAPI backend
+├── ui.py                # Gradio frontend
+├── run.py               # Unified launcher
+├── train_model.py       # Model training pipeline
+├── data_generation.py   # Synthetic dataset generator
+├── utils.py             # Utility helpers
+├── model.pkl            # Trained model
+├── metadata.pkl         # Model metadata
+├── tree_plot.png        # Decision tree visualization
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Design Principles
+
+* Clear separation of training and serving
+* Reproducible model pipeline
+* Interpretability through feature importance
+* Modular architecture
+* Deployment simulation via FastAPI
+
+---
+
+## Potential Improvements
+
+* Replace synthetic data with real academic dataset
+* Add model comparison (Random Forest, XGBoost)
+* Add cross-validation metrics dashboard
+* Integrate database for prediction logging
+* Dockerize for production deployment
+* Deploy on cloud infrastructure
+
+---
+
+## Professional Positioning
+
+This project demonstrates:
+
+* End-to-end ML workflow implementation
+* REST API model serving
+* Interactive ML application design
+* Model interpretability techniques
+* Production-style deployment simulation
+
+
